@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTask, shouldEdit, editTask} from '../redux/slices/todoSlice';
+import { deleteTask, shouldEdit, editTask, doneToggle} from '../redux/slices/todoSlice';
 import { useRef } from 'react';
 
 const Task = ({id, description, isDone}) => {
@@ -18,6 +18,12 @@ const Task = ({id, description, isDone}) => {
     const handleEditTask = () => {
         const newDescription = descriptionRef.current.value
         dispatch(editTask(newDescription))
+    }
+
+    const handleIsDone = () => {
+        const doneId = id
+        const doneValue = !isDone
+        dispatch(doneToggle({doneId, doneValue}))
     }
 
     return(
@@ -45,7 +51,7 @@ const Task = ({id, description, isDone}) => {
                         <button className="btn btn-primary btn-sm ms-2 me-2 btn-danger" id="deleteButton" onClick={handleDelete}>Delete</button>
                         <button className="btn btn-primary btn-sm me-2 btn-warning" id="editButton" onClick={handleShouldEditTask}>Edit</button>
                         <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" id="isDoneToggle" />
+                            <input className="form-check-input" type="checkbox" id="isDoneToggle" checked={isDone} onChange={handleIsDone}/>
                             <label className="form-check-label" htmlFor="isDoneToggle">Done</label>
                         </div>
                         </>

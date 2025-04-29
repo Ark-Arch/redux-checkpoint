@@ -2,15 +2,22 @@ import React from 'react'
 import Task from './Task'
 import AddTask from './AddTask'
 import { useSelector, useDispatch } from 'react-redux'
-import { showAddTask } from '../redux/slices/todoSlice'
+import { showAddTask, filterTasks, setFilterValue } from '../redux/slices/todoSlice'
 
 const ListTask = () => {
     const tasks = useSelector((state) => state.todo.tasks)
     const showAddTaskComponent = useSelector((state) => state.todo.showAdd)
+    const filterValue = useSelector((state) => state.todo.filterValue)
     const dispatch = useDispatch()
 
     const handleAddComponent = () => {
         dispatch(showAddTask())
+    }
+
+    const handleFilter = (e) => {
+        const value = e.target.value
+        dispatch(setFilterValue(value))
+        dispatch(filterTasks(value))
     }
 
     return(
@@ -19,7 +26,7 @@ const ListTask = () => {
                 <h4 className="mb-0">Todo List</h4>
                 <div>
                     <button className="btn btn-success me-2" onClick={handleAddComponent} disabled={showAddTaskComponent}>Add Todo</button>
-                    <select className="form-select form-select-sm d-inline-block w-auto">
+                    <select className="form-select form-select-sm d-inline-block w-auto" onChange={handleFilter} value={filterValue}>
                     <option value="all">All</option>
                     <option value="done">Done</option>
                     <option value="not-done">Not Done</option>
