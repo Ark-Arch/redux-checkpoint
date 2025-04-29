@@ -4,6 +4,7 @@ import { tasks } from "../../assets/tasks";
 export const initialState = {
     tasks,
     showAdd: false,
+    isEdit: false
 }
 
 const todoSlice = createSlice({
@@ -14,11 +15,11 @@ const todoSlice = createSlice({
             const id = state.tasks.length + 1
             const description = action.payload
             const isDone = false
-            state.tasks.push({
+            description? state.tasks.push({
                 id,
                 description,
                 isDone                
-            })
+            }) : ''
             state.showAdd = false
         },
         deleteTask: (state, action) => {
@@ -33,9 +34,21 @@ const todoSlice = createSlice({
         },
         showAddTask: (state) => {
             state.showAdd = true
+        },
+        editTask: (state, action) => {
+            const toEdit = state.isEdit
+            state.tasks = state.tasks.map((task)=>(
+                task.id === toEdit ? {
+                    ...task, description:action.payload, isDone:false
+                }: task
+            ))
+            state.isEdit = false
+        },
+        shouldEdit: (state, action) =>{
+            state.isEdit = action.payload
         }
     }
 })
 
-export const {addTask, deleteTask, showAddTask} = todoSlice.actions
+export const {addTask, deleteTask, showAddTask, editTask, shouldEdit} = todoSlice.actions
 export default todoSlice.reducer
