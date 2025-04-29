@@ -26,12 +26,14 @@ const ListTask = () => {
                     </select>
                 </div>
             </div>
+            <div>
             {showAddTaskComponent?<AddTask/>:""}
             {
                 tasks.map((task)=>(
                     <Task key={task.id} id={task.id} description={task.description} isDone={task.isDone}/>
                 ))
             }
+            </div>
         </div>
     )
 }

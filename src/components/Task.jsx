@@ -10,7 +10,7 @@ const Task = ({id, description, isDone}) => {
     }
 
     return(
-        <div className="d-flex align-items-center border p-3 rounded mb-2" style={{width:'1000px'}} id={`task${id}`}>
+        <div className="col-12 col-md-12 d-flex align-items-center border p-3 rounded mb-2" id={`task${id}`}>
             <div className="me-3" id="taskId">
                 {id}
             </div>
